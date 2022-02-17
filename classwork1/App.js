@@ -6,6 +6,11 @@ const path = require('path');
 // 1. Спробуйте створити якийсь файл txt, прочитайте з нього дані і одразу,
 //     дані які ви отримали запишіть їх в інший файл, в вас вийде невеликий callback hell, пізніше я вам покажу
 //     як можна це обійти, але поки зробіть так
+
+
+
+
+
 //
 // 2. Створіть файл ( можете вручну ) заповніть його якимись даними
 // Прочитайте його, скопіюйте всі дані з нього і перенесіть їх в нову папку
@@ -42,28 +47,41 @@ function directory() {
     fs.readdir(path.join(__dirname, 'ThirdTask'), (err, data) => {
         if (err) {
             console.log(err);
-        } else if (data.isFile()) {
-            fs.appendFile(path.join(__dirname, 'ThirdTask', `${data}`), '', (err) => {
-                if (err) {
-                    console.log(err);
-                    throw err
-                }
-            })
-        } else if (data.isDirectory()) {
-            fs.rename(path.join(__dirname, 'ThirdTask', `${data}`), path.join(__dirname, 'ThirdTask', `New_${data}`), (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            })
         }
 
+        for (let file of data) {
+            fs.stat(__dirname+'/ThirdTask'+ `/${file}`,  (err, stats)=>{
+                if (err){
+                    console.log(err);
+                    throw err;
+                }
+                else if (stats.isFile()) {
+                    fs.appendFile(path.join(__dirname,'ThirdTask',`${file}`), '', (err) => {
+                        if (err) {
+                            console.log(err);
+                            throw err;
+                        }
+                    })
+                }
+                else if (stats.isDirectory()) {
+                    fs.rename(path.join(__dirname,'ThirdTask',`${file}`), path.join(__dirname,'ThirdTask',`/New_${file}`), (err) => {
+                        if (err) {
+                            console.log(err);
+                            throw err
+                        }
+                    })
+                }
+            });
+        }
     })
-
-
 }
 
-
 directory();
+
+
+// -----------------------------------------------------------------------------------------------------------------------------
+
+// Methods:
 
 // stats.isFile()
 // stats.isDirectory()
