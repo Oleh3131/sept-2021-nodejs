@@ -34,7 +34,14 @@ fs.mkdir(path.join(__dirname, 'ThirdTask'), (err) => {
             }
         })
     })
-})
+});
+
+
+function directoryСhecker(){
 
 
 
+}
+
+
+directoryСhecker();
