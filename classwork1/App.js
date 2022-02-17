@@ -1,5 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
+
+
+
 
 // Завдання на практику
 
@@ -45,35 +48,35 @@ const path = require('path');
 //     Також вийде callback hell
 
 
-fs.writeFile(path.join(__dirname, "secondTask.txt"), '\nSECOND TASK INFO', (err) => {
-    if (err) {
-        console.log(err);
-        throw err;
-    }
-    fs.readFile(path.join(__dirname, "secondTask.txt"), 'utf-8', (err, data) => {
-        if (err) {
-            console.log(err);
-            throw err;
-        }
-        console.log(data);
-        fs.mkdir(path.join(__dirname, 'SecondTask'), (err) => {
-            if (err) {
-                console.log(err);
-            }
-            fs.writeFile(path.join(__dirname,'SecondTask', "secondTaskNext.txt"), `${data}`, (err) => {
-                if (err) {
-                    console.log(err);
-                    throw err;
-                }
-                fs.unlink(path.join(__dirname, "secondTask.txt"), (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            })
-        })
-    })
-});
+// fs.writeFile(path.join(__dirname, "secondTask.txt"), '\nSECOND TASK INFO', (err) => {
+//     if (err) {
+//         console.log(err);
+//         throw err;
+//     }
+//     fs.readFile(path.join(__dirname, "secondTask.txt"), 'utf-8', (err, data) => {
+//         if (err) {
+//             console.log(err);
+//             throw err;
+//         }
+//         console.log(data);
+//         fs.mkdir(path.join(__dirname, 'SecondTask'), (err) => {
+//             if (err) {
+//                 console.log(err);
+//             }
+//             fs.writeFile(path.join(__dirname,'SecondTask', "secondTaskNext.txt"), `${data}`, (err) => {
+//                 if (err) {
+//                     console.log(err);
+//                     throw err;
+//                 }
+//                 fs.unlink(path.join(__dirname, "secondTask.txt"), (err) => {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                 })
+//             })
+//         })
+//     })
+// });
 
 
 // ------------------------------------------------------------------------------------------------------------------------------
