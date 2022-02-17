@@ -27,7 +27,7 @@ fs.mkdir(path.join(__dirname, 'ThirdTask'), (err) => {
         if (err) {
             console.log(err);
         }
-        fs.writeFile(path.join(__dirname, 'ThirdTask', 'ThirdTask.txt'), `\nTHIRD TASK INFO`, (err) => {
+        fs.writeFile(path.join(__dirname, 'ThirdTask', 'thirdTask.txt'), `\nTHIRD TASK INFO`, (err) => {
             if (err) {
                 console.log(err);
                 throw err;
@@ -40,7 +40,23 @@ fs.mkdir(path.join(__dirname, 'ThirdTask'), (err) => {
 function directory() {
 
     fs.readdir(path.join(__dirname, 'ThirdTask'), (err, data) => {
-        console.log(data);
+        if (err) {
+            console.log(err);
+        } else if (data.isFile()) {
+            fs.appendFile(path.join(__dirname, 'ThirdTask', `${data}`), '', (err) => {
+                if (err) {
+                    console.log(err);
+                    throw err
+                }
+            })
+        } else if (data.isDirectory()) {
+            fs.rename(path.join(__dirname, 'ThirdTask', `${data}`), path.join(__dirname, 'ThirdTask', `New_${data}`), (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
+
     })
 
 
@@ -48,3 +64,11 @@ function directory() {
 
 
 directory();
+
+// stats.isFile()
+// stats.isDirectory()
+// stats.isBlockDevice()
+// stats.isCharacterDevice()
+// stats.isSymbolicLink() // (only valid with fs.lstat())
+// stats.isFIFO()
+// stats.isSocket()
