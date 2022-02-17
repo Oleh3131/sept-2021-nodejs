@@ -37,11 +37,14 @@ fs.mkdir(path.join(__dirname, 'ThirdTask'), (err) => {
 });
 
 
-function directoryСhecker(){
+function directory() {
 
+    fs.readdir(path.join(__dirname, 'ThirdTask'), (err, data) => {
+        console.log(data);
+    })
 
 
 }
 
 
-directoryСhecker();
+directory();
