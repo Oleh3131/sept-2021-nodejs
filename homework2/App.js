@@ -1,12 +1,11 @@
 const express = require('express');
 const {engine} = require('express-handlebars');
 const path = require('path');
-const e = require("express");
 const {urlencoded} = require("express");
 
 //     ДЗ
 
-    // декілька ендпоінтів зробити
+// декілька ендпоінтів зробити
 
 // 1. /login, поля які треба відрендерити в файлі hbs: firstName, lastName,
 //     email(унікальне поле), password, age, city
@@ -22,20 +21,46 @@ const {urlencoded} = require("express");
 // 4. зробити якщо не відпрацюють ендпоінти то на сторінку notFound редірект
 
 
-
-const users =[
-    {firstname:'Keelie', lastname:'Best',email:'jimyrem@mailinator.com',password:'4e5rer5ge4gr',age:'55',city:'New York'},
-    {firstname:'Sheila', lastname:'Woodard',email:'boceb@mailinator.com',password:'we4eewrbgf6r',age:'44',city:'Madrid'},
-    {firstname:'India', lastname:'Jacobs',email:'muxiwy@mailinator.com',password:'dwew4778wger',age:'17',city:'Kyiv'}
+const users = [
+    {
+        firstname: 'Keelie',
+        lastname: 'Best',
+        email: 'jimyrem@mailinator.com',
+        password: '4e5rer5ge4gr',
+        age: '55',
+        city: 'New York'
+    },
+    {
+        firstname: 'Sheila',
+        lastname: 'Woodard',
+        email: 'boceb@mailinator.com',
+        password: 'we4eewrbgf6r',
+        age: '44',
+        city: 'Madrid'
+    },
+    {
+        firstname: 'India',
+        lastname: 'Jacobs',
+        email: 'muxiwy@mailinator.com',
+        password: 'dwew4778wger',
+        age: '17',
+        city: 'Kyiv'
+    }
 ]
 
+let userIdMain = users.map((item, index) => {
+    item.id = index + 1;
+    return item;
+});
+
+console.log(userIdMain);
 
 const app = express();
 
 app.use(express.json());
 // Потрібен щоб nodejs міг приймати файли з розширенням json
 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended: true}));
 
 
 app.use(express.static(path.join(__dirname, 'static')));
@@ -44,38 +69,53 @@ app.engine('.hbs', engine({defaultLayout: false}));
 app.set('views', path.join(__dirname, 'static'));
 
 
-app.get('/login',(req,res)=>{
-    res.render('login')
+app.get('/login', (req, res) => {
+    res.render('login');
 })
 
-app.get('/userExist',(req,res)=>{
+app.get('/userExist', (req, res) => {
     res.render('userExist');
 })
 
-app.get('/users',(req,res)=>{
-    res.render('users',{users});
+app.get('/users', (req, res) => {
+    res.render('users', {users});
     // Передаємо другим компонентом наш масив users ----> ({users})
 })
 
-app.post('/login',(req,res)=>{
 
-    if (users.email===req.body.email){
+app.get('/users/:userId', ({params}, res) => {
+
+    let filter = users.filter(user => user.id === +params.userId);
+
+    res.json({filter});
+
+});
+
+
+app.post('/login', (req, res) => {
+
+    const findUser = users.find(user => user.email === req.body.email);
+
+    if (findUser) {
 
         res.redirect('/userExist')
 
-    } else if (users.email!==req.body.email){
-
-        users.push(req.body)
-        // Всі дані які заносимо у форму будемо пушити у наш масив
-
-        res.redirect('/users');
-        // При відправці форми вона нас перенаправляє на сторінку /users котра відмальовує наш масив
-        // і запушує в себе те, що ми тільки що передали у формі.
-
+        return;
     }
+
+    users.push(req.body)
+    // Всі дані які заносимо у форму будемо пушити у наш масив
+
+    res.redirect('/users');
+    // При відправці форми вона нас перенаправляє на сторінку /users котра відмальовує наш масив
+    // і запушує в себе те, що ми тільки що передали у формі.
+
 })
 
 
-app.listen(5800,()=>{
+app.listen(5800, () => {
     console.log('Server has started');
 })
+
+
+
