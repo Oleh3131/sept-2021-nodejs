@@ -1,9 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
-
-
 // ДЗ:
 //
 //     Всі дії виконувати з допомогою модулів (вручну нічого не створюємо)
@@ -17,28 +14,21 @@ const path = require('path');
 // Коли ви це виконаєте напишіть функцію яка буде міняти місцями юзерів з одного файлу і папки в іншу.
 // (ті, що були в папці inPerson будуть в папці online)
 
-
-
-
-
-
 fs.mkdir(path.join(__dirname, 'main'), {recursive: true}, (err) => {
     if (err) {
         console.log(err);
     }
-})
-
-fs.mkdir(path.join(__dirname, 'main', 'online'), {recursive: true}, (err) => {
-    if (err) {
-        console.log(err);
-    }
-})
-
-fs.mkdir(path.join(__dirname, 'main', 'inPerson'), {recursive: true}, (err) => {
-    if (err) {
-        console.log(err);
-    }
-})
+    fs.mkdir(path.join(__dirname, 'main', 'online'), {recursive: true}, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        fs.mkdir(path.join(__dirname, 'main', 'inPerson'), {recursive: true}, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    });
+});
 
 const onlineUsers = [
     {username: 'Roman', age: 26, city: 'Rivne'},
@@ -52,7 +42,6 @@ const inPersonUsers = [
     {username: 'Karl', age: 24, city: 'Paris'}
 ];
 
-
 for (let onlineUser of onlineUsers) {
     for (let key in onlineUser) {
         fs.writeFile(path.join(__dirname, 'main', 'online', 'online.txt'),
@@ -64,18 +53,26 @@ for (let onlineUser of onlineUsers) {
                     throw err
                 }
             });
-        fs.appendFile(path.join(__dirname, 'main', 'inPerson', 'inPerson.txt'),
-            `\n${key}:${onlineUser[key]}`,
-            {flag: 'a'},
-            (err) => {
-                if (err) {
-                    console.log(err);
-                    throw err
-                }
-            });
     }
 }
 
+function movingOnlineUser(onlineUsers) {
+    for (let onlineUser of onlineUsers) {
+        for (let key in onlineUser) {
+            fs.appendFile(path.join(__dirname, 'main', 'inPerson', 'inPerson.txt'),
+                `\n${key}:${onlineUser[key]}`,
+                {flag: 'a'},
+                (err) => {
+                    if (err) {
+                        console.log(err);
+                        throw err
+                    }
+                });
+        }
+    }
+}
+
+movingOnlineUser(onlineUsers);
 
 for (let inPersonUser of inPersonUsers) {
     for (let key in inPersonUser) {
@@ -88,18 +85,23 @@ for (let inPersonUser of inPersonUsers) {
                     throw err
                 }
             });
-        fs.appendFile(path.join(__dirname, 'main', 'online', 'online.txt'),
-            `\n${key}:${inPersonUser[key]}`,
-            {flag: 'a'},
-            (err) => {
-                if (err) {
-                    console.log(err);
-                    throw err
-                }
-            });
     }
 }
 
+function inpersonUsers(inPersonUsers) {
+    for (let inPersonUser of inPersonUsers) {
+        for (let key in inPersonUser) {
+            fs.appendFile(path.join(__dirname, 'main', 'online', 'online.txt'),
+                `\n${key}:${inPersonUser[key]}`,
+                {flag: 'a'},
+                (err) => {
+                    if (err) {
+                        console.log(err);
+                        throw err
+                    }
+                });
+        }
+    }
+}
 
-
-
+inpersonUsers(inPersonUsers);
