@@ -1,20 +1,19 @@
 
-
 username:Roman
 age:26
-city:Rivne
-username:Igor
 age:30
+city:Rivne
 city:Lviv
+username:Igor
 username:Sergio
 age:55
 city:Mykolaiv
 username:Jon
-age:45
 city:Ottawa
+age:45
 username:Boris
-age:12
-city:London
 username:Karl
 age:24
+city:London
+age:12
 city:Paris
