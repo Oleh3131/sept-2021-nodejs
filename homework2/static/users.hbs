@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div style="background: gold">
+
+<!--    Викликаємо цикл each і далі вказуємо назву того що ми плануємо ітерувати-->
+
+    {{#each users}}
+        <div><h4>firstname: {{this.firstname}}</h4></div>
+        <div><h4>lastname: {{this.lastname}}</h4></div>
+        <div><h4>email: {{this.email}}</h4></div>
+        <div><h4>password: {{this.password}}</h4></div>
+        <div><h4>age: {{this.age}}</h4></div>
+        <div><h4>city: {{this.city}}</h4></div>
+        <hr>
+    {{/each}}
+
+    <!--    Обов'язкова умова закрити ітерацію-->
+</div>
+</body>
+</html>
