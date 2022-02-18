@@ -113,6 +113,10 @@ app.post('/login', (req, res) => {
 })
 
 
+app.use((req, res) => {
+    res.render('notFound')
+});
+
 app.listen(5800, () => {
     console.log('Server has started');
 })

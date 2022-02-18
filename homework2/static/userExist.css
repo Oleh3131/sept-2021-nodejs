@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-.userExist{
+.userExist, .notFoundPage{
     width: 100%;
     height: 100vh;
     background: blanchedalmond;
