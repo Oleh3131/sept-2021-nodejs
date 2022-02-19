@@ -27,7 +27,7 @@ const users = [
         lastname: 'Best',
         email: 'jimyrem@mailinator.com',
         password: '4e5rer5ge4gr',
-        age: '55',
+        age: '25',
         city: 'New York'
     },
     {
@@ -43,12 +43,12 @@ const users = [
         lastname: 'Jacobs',
         email: 'muxiwy@mailinator.com',
         password: 'dwew4778wger',
-        age: '17',
+        age: '25',
         city: 'Kyiv'
     }
 ]
 
-let userIdMain = users.map((item, index) => {
+const userIdMain = users.map((item, index) => {
     item.id = index + 1;
     return item;
 });
@@ -78,19 +78,30 @@ app.get('/userExist', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
+
+    if (req.query.city) {
+        let userFilter = users.filter(user => user.city === req.query.city);
+        return res.render('users', {users: userFilter});
+
+    }
+    if (req.query.age) {
+        let userFilter = users.filter(user => user.age === req.query.age);
+        return res.render('users', {users: userFilter});
+
+    }
+
     res.render('users', {users});
     // Передаємо другим компонентом наш масив users ----> ({users})
+
 })
 
+app.get('/users/:userId', (req, res) => {
 
-app.get('/users/:userId', ({params}, res) => {
-
-    let filter = users.filter(user => user.id === +params.userId);
+    const filter = users.filter(user => user.id === +req.params.userId);
 
     res.json({filter});
 
 });
-
 
 app.post('/login', (req, res) => {
 
@@ -112,7 +123,6 @@ app.post('/login', (req, res) => {
 
 })
 
-
 app.use((req, res) => {
     res.render('notFound')
 });
@@ -120,6 +130,3 @@ app.use((req, res) => {
 app.listen(5800, () => {
     console.log('Server has started');
 })
-
-
-
