@@ -24,7 +24,7 @@ const {urlencoded} = require("express");
     // Необхідно розширити ваше ДЗ:
     //
     // - додайте ендпоінт /signIn який буде приймати email і password і
-    // якщо все вірно то редірект на сторінку цьогокористувача
+    // якщо все вірно то редірект на сторінку цього юзера
     //
     // * хто хоче складніше реалізуйте видалення користувача.
     // Кнопка повинна знаходитись на сторінці з інфою про одного юзера.
@@ -83,9 +83,19 @@ app.get('/login', (req, res) => {
     res.render('login');
 })
 
+app.get(`/signIn`,(req,res)=>{
+    res.render('signIn');
+})
+
+
 app.get('/userExist', (req, res) => {
     res.render('userExist');
 })
+
+app.get('/notExist', (req, res) => {
+    res.render('notExist');
+})
+
 
 app.get('/users', (req, res) => {
 
@@ -112,6 +122,21 @@ app.get('/users/:userId', (req, res) => {
     res.json({filter});
 
 });
+
+app.post("/signIn",(req,res)=>{
+
+    const signInUser = users.filter(user => user.email === req.body.email && user.password === req.body.password);
+
+    if (signInUser){
+
+        return res.render('users', {users: signInUser});
+
+    }
+
+    res.redirect('/notExist');
+
+})
+
 
 app.post('/login', (req, res) => {
 
