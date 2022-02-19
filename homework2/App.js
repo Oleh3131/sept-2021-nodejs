@@ -21,14 +21,14 @@ const {urlencoded} = require("express");
 // 4. зробити якщо не відпрацюють ендпоінти то на сторінку notFound редірект
 
 
-    // Необхідно розширити ваше ДЗ:
-    //
-    // - додайте ендпоінт /signIn який буде приймати email і password і
-    // якщо все вірно то редірект на сторінку цього юзера
-    //
-    // * хто хоче складніше реалізуйте видалення користувача.
-    // Кнопка повинна знаходитись на сторінці з інфою про одного юзера.
-    // Після видалення редірект на "/users"
+// Необхідно розширити ваше ДЗ:
+//
+// - додайте ендпоінт /signIn який буде приймати email і password і
+// якщо все вірно то редірект на сторінку цього юзера
+//
+// * хто хоче складніше реалізуйте видалення користувача.
+// Кнопка повинна знаходитись на сторінці з інфою про одного юзера.
+// Після видалення редірект на "/users"
 
 
 const users = [
@@ -83,7 +83,7 @@ app.get('/login', (req, res) => {
     res.render('login');
 })
 
-app.get(`/signIn`,(req,res)=>{
+app.get(`/signIn`, (req, res) => {
     res.render('signIn');
 })
 
@@ -123,18 +123,32 @@ app.get('/users/:userId', (req, res) => {
 
 });
 
-app.post("/signIn",(req,res)=>{
+app.post("/signIn", (req, res) => {
 
-    const signInUser = users.filter(user => user.email === req.body.email && user.password === req.body.password);
+    if (req.body) {
 
-    if (signInUser){
+        if( req.body.email && req.body.password) {
 
-        return res.render('users', {users: signInUser});
+            let signInUser = users.filter(user => user.email === req.body.email && user.password === req.body.password);
 
+            if (signInUser) {
+
+                return res.render('users', {users: signInUser});
+
+            }
+        }
+
+        if(req.body.email && req.body.password) {
+
+            let inUser = users.find(user => user.email === req.body.email && user.password === req.body.password);
+
+            if (!inUser){
+
+                return  res.redirect('/notExist');
+            }
+
+        }
     }
-
-    res.redirect('/notExist');
-
 })
 
 
