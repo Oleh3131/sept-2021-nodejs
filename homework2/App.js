@@ -123,31 +123,19 @@ app.get('/users/:userId', (req, res) => {
 
 });
 
-app.post("/signIn", (req, res) => {
+app.post("/signIn", ({body}, res) => {
 
-    if (req.body) {
+    const signInUser = users.filter(user => user.email === body.email && user.password === body.password);
 
-        if( req.body.email && req.body.password) {
+    if (signInUser.length) {
+        res.render('users', { users: signInUser });
+        return
+    }
 
-            let signInUser = users.filter(user => user.email === req.body.email && user.password === req.body.password);
+    if(signInUser.length===0){
 
-            if (signInUser) {
+        res.redirect('/notExist');
 
-                return res.render('users', {users: signInUser});
-
-            }
-        }
-
-        if(req.body.email && req.body.password) {
-
-            let inUser = users.find(user => user.email === req.body.email && user.password === req.body.password);
-
-            if (!inUser){
-
-                return  res.redirect('/notExist');
-            }
-
-        }
     }
 })
 
