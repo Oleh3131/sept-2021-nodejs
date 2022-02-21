@@ -1,10 +1,8 @@
 const {Router} = require('express');
-const users = require('../db/users')
+const notExistController = require('../controllers/notExistController');
 
 const notExistRouter = Router();
 
-notExistRouter.get('/', (req, res) => {
-    res.render('notExist');
-})
+notExistRouter.get('/', notExistController.renderInfo);
 
 module.exports = notExistRouter;

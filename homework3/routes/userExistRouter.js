@@ -1,10 +1,8 @@
 const {Router} = require('express');
-const users = require('../db/users')
+const userExistController = require('../controllers/userExistController');
 
 const userExistRouter = Router();
 
-userExistRouter.get('/', (req, res) => {
-    res.render('userExist');
-});
+userExistRouter.get('/', userExistController.renderInfo);
 
 module.exports = userExistRouter;
