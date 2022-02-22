@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.set('view engine', '.hbs');
 app.engine('.hbs', engine({defaultLayout: false}));
 app.set('views', path.join(__dirname, 'static'));
-
+// іваі
 app.use(routes);
 
 app.listen(5800, () => {
