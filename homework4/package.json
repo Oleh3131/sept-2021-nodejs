@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "rimraf dist && tsc-watch --onSuccess",
-    "watch:server": "nodemon './src/App.ts' --watch './src'"
+    "start": "node App.js"
   },
   "author": "",
   "license": "ISC",
