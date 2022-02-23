@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { users } from "./users";
+import { users } from './users';
 
 const app = express();
 

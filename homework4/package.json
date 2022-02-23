@@ -2,11 +2,17 @@
   "name": "homework4",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/App.js",
   "scripts": {
-    "start": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
+    "start:dev": "nodemon App.ts",
+    "build": "rimraf dist tsc --watch",
     "lint": "eslint --cache --ext .js,.ts, src",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+
+    "typeorm": "node -r ts-node/register ./node_modules/typeorm/cli.js",
+    "migration:generate": "typeorm migration:create -n $npm_config_name",
+    "migration:run": "npm run typeorm migration:run",
+    "migration:revert": "npm run typeorm migration:revert"
   },
   "keywords": [],
   "author": "",
