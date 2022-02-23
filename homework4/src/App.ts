@@ -1,11 +1,13 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import { users } from "./users";
 
 const app = express();
 
-app.listen(5800,()=>{
-    console.log('Server has started !')
+app.get('/', (req:Request, res:Response) => {
+    console.log(users);
+    res.end(2);
 });
 
-console.log(31);
-console.log(31);
-
+app.listen(5800, () => {
+    console.log('Server has started !');
+});
